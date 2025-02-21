@@ -8,7 +8,8 @@ import Dashboard from "./pages/Dashboard";
 import Map from "./pages/Map";
 import FuelMonitor from "./pages/Fuel";
 import NotFound from "./pages/NotFound";
-
+import Weather from "./pages/weather";
+import FishingTechniques from "./pages/FishningTechniques";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -24,6 +25,8 @@ const App = () => (
             <Route path="/map" element={<Map />} />
             <Route path="*" element={<NotFound />} />
             <Route path="/analysis" element={<FuelMonitor />} />
+            <Route path="/weather" element={<Weather />} />
+            <Route path="/techniques" element={<FishingTechniques />} />
           </Routes>
         </div>
       </BrowserRouter>

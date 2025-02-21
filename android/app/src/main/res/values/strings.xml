@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Aqua Hub</string>
+    <string name="title_activity_main">Aqua Hub</string>
+    <string name="package_name">com.hackatron.com</string>
+    <string name="custom_url_scheme">com.hackatron.com</string>
+</resources>
