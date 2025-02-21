@@ -1,7 +1,16 @@
-
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Menu, X, Anchor, Map, Droplets, Battery } from 'lucide-react';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Menu,
+  X,
+  Anchor,
+  Map,
+  Droplets,
+  Battery,
+  MapPinHouse,
+  MapPin,
+  FishIcon,
+} from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,21 +21,20 @@ const Navigation = () => {
       setScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Dashboard', icon: Map, href: '/dashboard' },
-    { name: 'Fish Tracking', icon: Anchor, href: '/tracking' },
-    { name: 'Water Analysis', icon: Droplets, href: '/analysis' },
-    { name: 'Fuel Monitor', icon: Battery, href: '/fuel' },
+    { name: "Dashboard", icon: Map, href: "/dashboard" },
+    { name: "Fuel Analysis", icon: Droplets, href: "/analysis" },
+    { name: "Fish Tracking", icon: FishIcon, href: "/map" },
   ];
 
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/80 backdrop-blur-md shadow-md' : 'bg-transparent'
+        scrolled ? "bg-white/80 backdrop-blur-md shadow-md" : "bg-transparent"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +42,9 @@ const Navigation = () => {
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center space-x-2">
               <Anchor className="h-8 w-8 text-primary" />
-              <span className="text-xl font-semibold text-primary">FishMate</span>
+              <span className="text-xl font-semibold text-primary">
+                FishMate
+              </span>
             </Link>
           </div>
 

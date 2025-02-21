@@ -1,33 +1,51 @@
-
-import { Link } from 'react-router-dom';
-import { Anchor, Map, Droplets, Battery, Navigation as NavIcon } from 'lucide-react';
-import Navigation from '@/components/Navigation';
+import { Link } from "react-router-dom";
+import {
+  Anchor,
+  Map,
+  Droplets,
+  Battery,
+  Navigation as NavIcon,
+  MapIcon,
+  FuelIcon,
+  Fuel,
+  Cloud,
+} from "lucide-react";
+import Navigation from "@/components/Navigation";
 
 const features = [
   {
+    icon: Cloud,
+    title: "Weather Forecasting",
+    description: "Real-time Weather updates.",
+  },
+  {
     icon: Map,
-    title: 'Advanced Fish Tracking',
-    description: 'Real-time GPS tracking and movement prediction for optimal fishing locations.',
+    title: "Advanced Fish Tracking",
+    description:
+      "Fish nearby",
   },
   {
     icon: Anchor,
-    title: 'Smart Navigation',
-    description: 'Efficient route planning and navigation to the best fishing spots.',
+    title: "Smart Navigation",
+    description:
+      "Real-time GPS tracking and movement prediction for optimal fishing locations.",
   },
   {
     icon: Droplets,
-    title: 'Water Analysis',
-    description: 'Monitor water conditions and temperature for better fishing results.',
+    title: "Fishing Techniques",
+    description:
+      "Fishing manual to promote sustainable fishing practices before setting out to sea.",
   },
   {
-    icon: Battery,
-    title: 'Fuel Monitoring',
-    description: 'Track fuel consumption and receive low fuel alerts.',
+    icon: Fuel,
+    title: "Fuel Monitoring",
+    description: "Track fuel consumption and receive low fuel alerts.",
   },
   {
     icon: NavIcon,
-    title: 'Safety Features',
-    description: 'Emergency SOS and real-time weather alerts for safer fishing.',
+    title: "Safety Features",
+    description:
+      "Emergency SOS and real-time weather alerts for safer fishing.",
   },
 ];
 
@@ -35,7 +53,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="pt-20 lg:pt-32 pb-16 relative overflow-hidden">
         <div className="container mx-auto px-4">
@@ -45,7 +63,8 @@ const Index = () => {
               <span className="text-primary"> FishMate</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-              Advanced AI-powered fishing analysis and navigation system for modern fishermen.
+              Advanced AI-powered fishing analysis and navigation system for
+              modern fishermen.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/dashboard" className="btn-primary">
@@ -76,9 +95,7 @@ const Index = () => {
                 <h3 className="text-xl font-semibold mb-3 text-gray-900">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600">
-                  {feature.description}
-                </p>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -93,7 +110,8 @@ const Index = () => {
               Ready to Transform Your Fishing Experience?
             </h2>
             <p className="text-xl text-gray-600 mb-8">
-              Join FishMate today and discover the power of AI-driven fishing analytics.
+              Join FishMate today and discover the power of AI-driven fishing
+              analytics.
             </p>
             <Link to="/dashboard" className="btn-primary">
               Start Your Journey
