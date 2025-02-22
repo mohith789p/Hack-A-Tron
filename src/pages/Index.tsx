@@ -26,7 +26,7 @@ const features = [
     icon: Anchor,
     title: "Smart Navigation",
     description: "Real-time GPS tracking and movement prediction.",
-    link: "/navigation",
+    link: "/map",
   },
   {
     icon: Droplets,

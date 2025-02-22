@@ -14,6 +14,7 @@ import FishingTechniques from "./pages/FishningTechniques";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import SignUp from "./pages/SignUp";
+import SafetyFeatures from "./pages/Safety";
 // import Travel from "./pages/Travel";
 
 const queryClient = new QueryClient();
@@ -38,6 +39,7 @@ const App = () => (
             <Route path="/techniques" element={<FishingTechniques />} />
             <Route path="/home" element={<Index />} />
             <Route path="/about" element={<About />} />
+            <Route path="/safety" element={<SafetyFeatures />} />
           </Route>
 
           {/* 404 Not Found Page */}

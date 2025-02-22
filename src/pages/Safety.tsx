@@ -1,36 +1,37 @@
-import Navigation from "@/components/Navigation";
-import { Fish, Globe, Users, Lightbulb } from "lucide-react";
-import { Button } from "antd"; // Imported Button from antd
-import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { Button } from "antd";
+import {
+  Shield,
+  CloudLightning,
+  MapPin,
+  AlertTriangle,
+  Lock,
+} from "lucide-react";
 
-const About = () => {
-  const navigate = useNavigate(); // Initialize the navigation function
+const SafetyFeatures = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Navigation />
-
-      {/* Hero Section */}
       <section className="pt-20 lg:pt-32 pb-16 text-center">
         <div className="container mx-auto px-6">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            About <span className="text-primary">FishMate</span>
+            Safety <span className="text-primary">Features</span>
           </h1>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            FishMate is a fishing analysis and navigation system designed to
-            help modern fishermen track fish movements, predict hotspots, and
-            optimize fuel usage for a smarter fishing experience.
+            Ensuring your safety with advanced features like emergency SOS,
+            weather alerts, and more.
           </p>
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-6">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
-            Why Choose FishMate?
+            Why Safety Matters?
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {features.map((feature, index) => (
               <div
                 key={index}
@@ -47,7 +48,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* Back to Home Button */}
       <div className="text-center mt-10">
         <Button
           type="primary"
@@ -63,25 +63,30 @@ const About = () => {
 
 const features = [
   {
-    icon: Fish,
-    title: "AI-Powered Fish Tracking",
-    description: "Track fish movements and predict the best fishing spots.",
+    icon: Shield,
+    title: "Emergency SOS",
+    description: "Quickly reach emergency contacts in critical situations.",
   },
   {
-    icon: Globe,
-    title: "Real-Time Navigation",
-    description: "Get precise GPS tracking and smart route suggestions.",
+    icon: CloudLightning,
+    title: "Real-Time Weather Alerts",
+    description: "Stay informed about weather conditions in your area.",
   },
   {
-    icon: Users,
-    title: "Community Support",
-    description: "Connect with other fishermen and share insights.",
+    icon: MapPin,
+    title: "Live Location Sharing",
+    description: "Share your location with trusted contacts for safety.",
   },
   {
-    icon: Lightbulb,
-    title: "Eco-Friendly Approach",
-    description: "Sustainable fishing techniques for a better future.",
+    icon: AlertTriangle,
+    title: "Automatic Distress Signals",
+    description: "Detects unusual activity and sends alerts automatically.",
+  },
+  {
+    icon: Lock,
+    title: "Secure Authentication",
+    description: "OTP-based login for enhanced security and protection.",
   },
 ];
 
-export default About;
+export default SafetyFeatures;
