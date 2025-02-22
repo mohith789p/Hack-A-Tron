@@ -19,7 +19,7 @@ const features = [
   {
     icon: Map,
     title: "Advanced Fish Tracking",
-    description: "Fish nearby",
+    description: "Tracking Fish nearby",
     link: "/map",
   },
   {
@@ -54,14 +54,15 @@ const Index = () => {
       <Navigation />
 
       {/* Hero Section */}
-      <section className="pt-20 lg:pt-32 pb-16 relative overflow-hidden">
+      <section className="pt-20 lg:pt-32 pb-16 relative overflow-hidden bg-gray/75">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-            Smart Fishing with <span className="text-primary">FishMate</span>
+            Smart Fishing with{" "}
+            <span className="text-white bg-clip-text">FishMate</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            AI-powered fishing analysis and navigation system for modern
-            fishermen.
+
+          <p className="text-xl text-primary-300 mb-8 max-w-2xl mx-auto">
+            Fishing analysis and navigation system for modern fishermen.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/dashboard" className="btn-primary">
@@ -75,7 +76,7 @@ const Index = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray/50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-gray-900">
             Powerful Features for Smart Fishing

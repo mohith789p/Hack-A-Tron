@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Weather from "./pages/weather";
 import FishingTechniques from "./pages/FishningTechniques";
 import Login from "./pages/Login";
+import About from "./pages/About";
 // import Travel from "./pages/Travel";
 
 const queryClient = new QueryClient();
@@ -34,7 +35,7 @@ const App = () => (
             <Route path="/weather" element={<Weather />} />
             <Route path="/techniques" element={<FishingTechniques />} />
             <Route path="/home" element={<Index />} />
-            {/* <Route path="/navigation" element={<Travel />} /> */}
+            <Route path="/about" element={<About />} />
           </Route>
 
           {/* 404 Not Found Page */}
