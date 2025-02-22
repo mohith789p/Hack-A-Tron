@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase"; // Import Firestore
+import { collection, addDoc } from "firebase/firestore";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -17,19 +19,28 @@ const SignUp = () => {
     setPhoneNumber(e.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name || !phoneNumber || phoneNumber.length !== 10) {
       message.error("Please fill in all fields correctly");
       return;
     }
 
     setIsLoading(true);
-    setTimeout(() => {
-      message.success("Sign Up Successful! Redirecting to login...");
-      localStorage.setItem("user", JSON.stringify({ name, phoneNumber }));
+
+    try {
+      // Add user data (name and phone number) to Firestore
+      await addDoc(collection(db, "users"), {
+        name: name,
+        phoneNumber: phoneNumber,
+      });
+
+      message.success("Sign Up Successful! Redirecting to home...");
       navigate("/home");
+    } catch (error) {
+      message.error("Sign Up Failed. Please try again.");
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   return (
