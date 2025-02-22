@@ -49,29 +49,34 @@ const FishingTechniques = () => {
   );
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">
-        Fishing Techniques
-      </h2>
-      <ul className="space-y-2">
-        {techniques.map((technique, index) => (
-          <li
-            key={index}
-            className="cursor-pointer p-2 bg-blue-100 rounded-md hover:bg-blue-200"
-            onClick={() => setSelectedTechnique(technique)}
-          >
-            {technique.name}
-          </li>
-        ))}
-      </ul>
-      {selectedTechnique && (
-        <div className="mt-4 p-4 bg-gray-100 rounded-md">
-          <h3 className="text-xl font-semibold text-gray-700">
-            {selectedTechnique.name}
-          </h3>
-          <p className="text-gray-600 mt-2">{selectedTechnique.description}</p>
-        </div>
-      )}
+    <div className="min-h-screen flex items-center justify-center bg-transparent p-6">
+      {/* ✅ Glassmorphism Card */}
+      <div className="max-w-2xl w-full p-8 bg-white/80 backdrop-blur-md rounded-lg shadow-lg">
+        <h2 className="text-3xl font-bold text-gray-800 text-center mb-6">
+          Fishing Techniques 🎣
+        </h2>
+        <ul className="space-y-3">
+          {techniques.map((technique, index) => (
+            <li
+              key={index}
+              className="cursor-pointer p-3 bg-blue-100 rounded-lg hover:bg-blue-300 transition"
+              onClick={() => setSelectedTechnique(technique)}
+            >
+              <span className="text-lg font-medium">{technique.name}</span>
+            </li>
+          ))}
+        </ul>
+        {selectedTechnique && (
+          <div className="mt-6 p-5 bg-gray-100 rounded-lg shadow">
+            <h3 className="text-xl font-semibold text-gray-700">
+              {selectedTechnique.name}
+            </h3>
+            <p className="text-gray-600 mt-2">
+              {selectedTechnique.description}
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

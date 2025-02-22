@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Circle } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  Circle,
+  useMap,
+} from "react-leaflet";
 import L from "leaflet";
+import "leaflet/dist/leaflet.css"; // Import Leaflet CSS for proper tile display
 
-// Fix for default marker icons in react-leaflet
-// @ts-ignore
-delete L.Icon.Default.prototype._getIconUrl;
+// Fix for missing Leaflet marker icons
+delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
@@ -14,6 +20,17 @@ L.Icon.Default.mergeOptions({
   shadowUrl:
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
+
+// Component to fix map rendering issues
+const MapFix = () => {
+  const map = useMap();
+  useEffect(() => {
+    setTimeout(() => {
+      map.invalidateSize();
+    }, 500);
+  }, [map]);
+  return null;
+};
 
 const FishTrack = () => {
   const [position, setPosition] = useState<[number, number] | null>(null);
@@ -26,16 +43,16 @@ const FishTrack = () => {
         },
         (error) => {
           console.error("Error getting location:", error);
-          setPosition([12.8797, 80.2209]); // Default: Tamil Nadu coast
+          setPosition([12.8797, 80.2209]); // Default to Tamil Nadu coast
         }
       );
     } else {
       console.error("Geolocation is not supported");
-      setPosition([12.8797, 80.2209]); // Default: Tamil Nadu coast
+      setPosition([12.8797, 80.2209]); // Default to Tamil Nadu coast
     }
   }, []);
 
-  // Example fish-rich areas (latitude, longitude, density) in ocean
+  // Example fish-rich areas (latitude, longitude, density)
   const fishHotspots = [
     { lat: 12.9527, lng: 80.3507, density: 500 }, // Chennai Coast
     { lat: 7.9883, lng: 77.5385, density: 700 }, // Kanyakumari
@@ -46,23 +63,25 @@ const FishTrack = () => {
   ];
 
   return (
-    <div className="relative w-full h-[750px] rounded-lg overflow-hidden">
+    <div className="relative w-screen h-screen">
       {position ? (
         <MapContainer
           center={position}
           zoom={7}
-          style={{ height: "100%", width: "100%" }}
+          style={{ height: "100vh", width: "100vw" }}
           className="z-0"
         >
+          <MapFix /> {/* Fixes rendering issues */}
+          {/* OpenStreetMap Tile Layer */}
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
-
+          {/* Current Location Marker */}
           <Marker position={position}>
             <Popup>Your Current Location 📍</Popup>
           </Marker>
-
+          {/* Fish Hotspots */}
           {fishHotspots.map((spot, index) => (
             <Circle
               key={index}
@@ -77,7 +96,6 @@ const FishTrack = () => {
       ) : (
         <p className="text-center text-gray-600">Fetching location...</p>
       )}
-      <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-background/10 z-10" />
     </div>
   );
 };
