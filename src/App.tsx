@@ -13,6 +13,7 @@ import Weather from "./pages/weather";
 import FishingTechniques from "./pages/FishningTechniques";
 import Login from "./pages/Login";
 import About from "./pages/About";
+import SignUp from "./pages/SignUp";
 // import Travel from "./pages/Travel";
 
 const queryClient = new QueryClient();
@@ -25,7 +26,8 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           {/* Login Page (No Layout) */}
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
 
           {/* Protected Routes (With Layout) */}
           <Route element={<Layout />}>

@@ -65,7 +65,7 @@ const Login = () => {
       <div className="w-full max-w-lg px-6">
         <Card className="p-8 shadow-lg">
           <h1 className="text-3xl font-bold text-gray-900 text-center mb-4">
-            OTP Login
+            Login
           </h1>
           <p className="text-gray-600 text-center mb-6">
             Please log in using your phone number
@@ -113,6 +113,16 @@ const Login = () => {
               </Button>
             </div>
           )}
+          <p className="text-center text-gray-600 mt-4">
+            Don't have an account?
+            <span
+              className="text-blue-500 cursor-pointer"
+              onClick={() => navigate("/")}
+            >
+              {" "}
+              Sign Up
+            </span>
+          </p>
         </Card>
       </div>
     </div>
