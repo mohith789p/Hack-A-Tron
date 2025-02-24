@@ -32,7 +32,7 @@ const MapFix = () => {
   return null;
 };
 
-const FishTrack = () => {
+const MapComponent = () => {
   const [position, setPosition] = useState<[number, number] | null>(null);
 
   useEffect(() => {
@@ -100,4 +100,4 @@ const FishTrack = () => {
   );
 };
 
-export default FishTrack;
+export default MapComponent;
