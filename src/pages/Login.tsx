@@ -1,60 +1,81 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button, Input, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { auth, db } from "../firebase"; // Import Firestore instance
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const Login = () => {
   const navigate = useNavigate();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [otp, setOtp] = useState<string>("");
   const [isOtpSent, setIsOtpSent] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [generatedOtp, setGeneratedOtp] = useState<string>("");
+  const [confirmationResult, setConfirmationResult] = useState<any>(null);
 
-  const handlePhoneNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPhoneNumber(e.target.value);
+  useEffect(() => {
+    if (!window.recaptchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(
+        auth,
+        "recaptcha-container",
+        {
+          size: "invisible",
+          callback: () => console.log("reCAPTCHA verified!"),
+        }
+      );
+    }
+  }, []);
+
+  const checkUserExists = async (formattedPhoneNumber: string) => {
+    const usersRef = collection(db, "users"); // Replace with your Firestore collection name
+    const q = query(usersRef, where("phoneNumber", "==", formattedPhoneNumber));
+    const querySnapshot = await getDocs(q);
+    return !querySnapshot.empty; // Returns true if user exists, false otherwise
   };
 
-  const handleOtpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setOtp(e.target.value);
-  };
-
-  const generateOtp = (): string => {
-    return Math.floor(10000 + Math.random() * 90000).toString();
-  };
-
-  const sendOtp = () => {
+  const sendOtp = async () => {
     if (!phoneNumber || phoneNumber.length !== 10) {
       message.error("Please enter a valid 10-digit phone number");
       return;
     }
-    const otp = generateOtp();
-    setGeneratedOtp(otp);
-    message.success(`OTP has been sent to ${phoneNumber}`);
-    setIsOtpSent(true);
-  };
 
-  const validateOtp = () => {
-    if (parseInt(otp) > 9999) {
-      message.success("OTP is valid. Access granted!");
-      navigate("/home");
-    } else {
-      message.error("Invalid OTP. Please try again");
+    const formattedPhoneNumber = `+91${phoneNumber}`;
+
+    try {
+      const userExists = await checkUserExists(phoneNumber);
+      if (!userExists) {
+        message.error("No user found with this phone number.");
+        return;
+      }
+
+      const confirmation = await signInWithPhoneNumber(
+        auth,
+        formattedPhoneNumber,
+        window.recaptchaVerifier
+      );
+      setConfirmationResult(confirmation);
+      setIsOtpSent(true);
+      message.success("OTP sent successfully!");
+    } catch (error) {
+      console.error("OTP send error:", error);
+      message.error("Failed to send OTP. Try again.");
     }
   };
 
-  const handleSubmit = async () => {
+  const verifyOtp = async () => {
     if (!otp) {
-      message.error("Please enter the OTP");
+      message.error("Please enter OTP");
       return;
     }
 
-    setIsLoading(true);
-
-    setTimeout(() => {
-      validateOtp();
-      setIsLoading(false);
-    }, 1500);
+    try {
+      await confirmationResult.confirm(otp);
+      message.success("Login successful!");
+      navigate("/home");
+    } catch (error) {
+      console.error("OTP verification error:", error);
+      message.error("Invalid OTP. Try again.");
+    }
   };
 
   return (
@@ -72,54 +93,49 @@ const Login = () => {
           </p>
 
           {!isOtpSent ? (
-            <div>
-              <div className="mb-4">
-                <Input
-                  placeholder="Enter your 10-digit phone number"
-                  value={phoneNumber}
-                  onChange={handlePhoneNumberChange}
-                  maxLength={10}
-                  className="h-12 text-lg"
-                />
-              </div>
+            <>
+              <Input
+                placeholder="Enter your 10-digit phone number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                maxLength={10}
+                className="h-12 text-lg mb-4"
+              />
               <Button
                 type="primary"
                 block
                 onClick={sendOtp}
-                disabled={isLoading}
                 className="h-12 text-lg"
               >
-                {isLoading ? "Sending OTP..." : "Send OTP"}
+                Send OTP
               </Button>
-            </div>
+              <div id="recaptcha-container"></div>
+            </>
           ) : (
-            <div>
-              <div className="mb-4">
-                <Input
-                  placeholder="Enter the OTP"
-                  value={otp}
-                  onChange={handleOtpChange}
-                  className="h-12 text-lg"
-                />
-              </div>
+            <>
+              <Input
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+                className="h-12 text-lg mb-4"
+              />
               <Button
                 type="primary"
                 block
-                onClick={handleSubmit}
-                disabled={isLoading}
+                onClick={verifyOtp}
                 className="h-12 text-lg"
               >
-                {isLoading ? "Verifying OTP..." : "Verify OTP"}
+                Verify OTP
               </Button>
-            </div>
+            </>
           )}
+
           <p className="text-center text-gray-600 mt-4">
-            Don't have an account?
+            Don't have an account?{" "}
             <span
               className="text-blue-500 cursor-pointer"
               onClick={() => navigate("/")}
             >
-              {" "}
               Sign Up
             </span>
           </p>
