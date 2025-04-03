@@ -62,15 +62,12 @@ const statCards = [
 
 const Dashboard = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-transparent">
       <Navigation />
 
       <main className="container mx-auto px-4 pt-24">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">
-            Monitor your fishing operations in real-time
-          </p>
+          <h1 className="text-3xl font-bold text-primary-400">Dashboard</h1>
         </div>
 
         {/* Stats Grid */}

@@ -58,7 +58,7 @@ const Index = () => {
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Smart Fishing with{" "}
-            <span className="text-white bg-clip-text">FishMate</span>
+            <span className="text-white bg-clip-text">AquaHub</span>
           </h1>
 
           <p className="text-xl text-primary-300 mb-8 max-w-2xl mx-auto">
